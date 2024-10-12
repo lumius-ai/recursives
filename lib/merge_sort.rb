@@ -1,65 +1,47 @@
 # Function for merging two arrays(least to greatest)
-def merge(array, left, right, mid)
-  n1 = mid - left + 1
-  n2 = right - mid
-  
-  # Temporary arrays
-  left_array = []
-  right_array = []
-  output = 0
-
-  for i in 0..n1
-    left_array[i] = array[i]
-  end
-
-  for j in 0..n2
-    right_array[i] = array[mid + 1 + j]
-  end
-
-  # indices for left, right and output arrays
+def merge(a1, a2)
   i = 0
   j = 0
-  k = 0
+  out = []
 
-  # Sorting the elements
-  while i < n1 and j < n2
-    if left_array[i] <= right_array[j]
-      output[k] = left_array[j]
+  while i < a1.length and j < a2.length
+    if a1[i] <= a2[j]
+      out.append(a1[i])
       i += 1
-    else 
-      output[k] = right_array[j]
+    else
+      out.append(a2[j])
       j += 1
     end
-    k += 1
   end
 
-  # Adding remaining elements
-  while i < n1
-    output[k] = left_array[i]
+  while i < a1.length
+    out.append(a1[i])
     i += 1
-    k += 1
   end
 
-  while j < n2
-    output[k] = right_array[j]
+  while j < a2.length
+    out.append(a2[j])
     j += 1
-    k += 1
   end
-    return output
+  return out
 end
 
 # Merge_sort implementation
-def merge_sort(array, left, right)
-  if left < right
-    mid = (right + left) / 2
-
-    left_sorted = merge_sort(array, left, mid)
-    right_sorted = merge_sort(array, (mid + 1), right)
-    return merge(array, left, right, mid)
+def merge_sort(array)
+  max = array.length
+  # base case
+  if max == 1
+    return array
+  end
+  # get midpoint of current array
+  if max > 0
+    mid = max / 2
   end
 
-  return "ERROR"
+  # Call itself on left and right subarrays
+  left_array = merge_sort(array[0...mid])
+  right_array = merge_sort(array[mid...max])
 
-
-  
+  # merge and return left + right
+  return merge(left_array, right_array)
 end
